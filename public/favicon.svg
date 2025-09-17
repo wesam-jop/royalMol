@@ -1,0 +1,37 @@
+<svg width="200" height="100" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- خلفية متدرجة -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- تأثير ضوئي للنص -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- الخلفية -->
+  <rect width="200" height="100" fill="url(#bgGradient)" rx="10" ry="10"/>
+
+  <!-- حرف G -->
+  <text x="45" y="65" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#ffffff" filter="url(#glow)">G</text>
+
+  <!-- حرف H -->
+  <text x="100" y="65" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#ffffff" filter="url(#glow)">H</text>
+
+  <!-- خط تحتي ديكوري -->
+  <line x1="30" y1="75" x2="170" y2="75" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+
+  <!-- نقاط ديكورية -->
+  <circle cx="25" cy="25" r="3" fill="#ffffff" opacity="0.8"/>
+  <circle cx="175" cy="25" r="3" fill="#ffffff" opacity="0.8"/>
+  <circle cx="25" cy="75" r="3" fill="#ffffff" opacity="0.8"/>
+  <circle cx="175" cy="75" r="3" fill="#ffffff" opacity="0.8"/>
+</svg>
