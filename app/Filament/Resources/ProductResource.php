@@ -30,7 +30,7 @@ class ProductResource extends Resource
             ->schema([
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
-                    ->label('الفئة')
+                    ->label('الشركة')
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->label('العنوان')
@@ -53,23 +53,38 @@ class ProductResource extends Resource
                     ->prefix('$')
                     ->rule('regex:/^0$|^[1-9]\d*(,\d{1,2})?$|^0(,\d{1,2})?$/')
                     ->helperText('يسمح فقط بالأرقام والفاصلة (مثال: 1234,56)')
-                    ->dehydrateStateUsing(fn ($state) => str_replace(',', '.', $state)) // الحل هنا
-
-
-                // Forms\Components\FileUpload::make('path')
-                //     ->label('الصورة')
-                //     ->directory('products')
-                //     ->disk('public')
-                //     ->multiple()
-                //     ->required()
-                //     ->saveRelationshipsUsing(function ($component, $state, $record) {
-                //         foreach ($state as $filePath) {
-                //             $record->images()->create([
-                //                 'path' => $filePath,
-                //             ]);
-                //         }
-                //     })
-                //     ->visibleOn(['create', 'edit']),
+                    ->dehydrateStateUsing(fn ($state) => str_replace(',', '.', $state)),
+                Forms\Components\TextInput::make('stock')
+                    ->label('المخزون')
+                    ->numeric()
+                    ->minValue(0)
+                    ->nullable(),
+                Forms\Components\FileUpload::make('images')
+                    ->label('الصور')
+                    ->directory('products')
+                    ->disk('public')
+                    ->multiple()
+                    ->image()
+                    ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
+                    ->required()
+                    ->saveRelationshipsUsing(function ($component, $state, $record) {
+                        // Delete old images if updating
+                        if ($record) {
+                            foreach ($record->images as $image) {
+                                \Illuminate\Support\Facades\Storage::disk('public')->delete($image->path);
+                                $image->delete();
+                            }
+                        }
+                        // Save new images
+                        foreach ($state as $index => $filePath) {
+                            $record->images()->create([
+                                'path' => $filePath,
+                                'sort' => $index,
+                            ]);
+                        }
+                    })
+                    ->visibleOn(['create', 'edit']),
             ]);
     }
 
@@ -78,22 +93,32 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category.name')
-                    ->label('الفئة')
-                    ->numeric()
+                    ->label('الشركة')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('العنوان')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('الوصف')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('الحالة'),
+                    ->label('الحالة')
+                    ->formatStateUsing(fn ($state) => $state === 'active' ? 'متوفر' : 'غير متوفر'),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
                     ->label('السعر')
+                    ->money('USD')
                     ->sortable(),
-
+                Tables\Columns\TextColumn::make('stock')
+                    ->label('المخزون')
+                    ->sortable()
+                    ->default('غير محدد'),
+                Tables\Columns\ImageColumn::make('images.path')
+                    ->label('الصور')
+                    ->getStateUsing(fn ($record) => $record->images->first() ? asset('storage/' . $record->images->first()->path) : null)
+                    ->circular()
+                    ->defaultImageUrl(url('/images/placeholder.png'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('تاريخ الإنشاء')
                     ->dateTime()
@@ -107,15 +132,13 @@ class ProductResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
-                    ->options(
-                        fn(Category $query): array => $query->get()->pluck('name', 'id')->toArray()
-                    )
-                    ->label('الفئة'),
+                    ->options(fn () => Category::pluck('name', 'id')->toArray())
+                    ->label('الشركة'),
                 Tables\Filters\SelectFilter::make('status')
                     ->label('الحالة')
                     ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive'
+                        'active' => 'متوفر',
+                        'inactive' => 'غير متوفر'
                     ]),
             ])
             ->actions([

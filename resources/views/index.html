@@ -1,354 +1,413 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Car Oil Products Hero</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .hero {
-            width: 1112px;
-            height: 388px;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
-            display: flex;
-            align-items: center;
-            font-family: 'Arial', sans-serif;
-            border: 1px solid #e9ecef;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 15% 85%, rgba(220, 53, 69, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 15%, rgba(220, 53, 69, 0.05) 0%, transparent 50%);
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 60px;
-        }
-
-        .text-content {
-            flex: 1;
-            max-width: 600px;
-        }
-
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 50%, #721c24 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            text-shadow: 0 4px 20px rgba(220, 53, 69, 0.2);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #495057;
-            line-height: 1.6;
-            margin-bottom: 32px;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(220, 53, 69, 0.5);
-            background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%);
-        }
-
-        .visual-element {
-            flex: 0 0 450px;
-            height: 320px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .svg-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .oil-drop-animation {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .gear-animation {
-            animation: rotate 10s linear infinite;
-            transform-origin: center;
-        }
-
-        .engine-part {
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        .performance-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: badge-pulse 2s ease-in-out infinite;
-        }
-
-        .decorative-circles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
-            opacity: 0.1;
-        }
-
-        .feature-highlights {
-            position: absolute;
-            bottom: 20px;
-            left: 60px;
-            display: flex;
-            gap: 30px;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .feature::before {
-            content: '✓';
-            color: #dc3545;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-12px);
-            }
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.7;
-                transform: scale(1.02);
-            }
-        }
-
-        @keyframes badge-pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.9;
-                transform: scale(1.05);
-            }
-        }
-    </style>
+    <title>لوحة تحكم الفئات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
 </head>
-
 <body>
-    <div class="hero">
-        <!-- Decorative Background Circles -->
-        <div class="decorative-circles">
-            <svg width="100%" height="100%" viewBox="0 0 1112 388" fill="none">
-                <circle cx="200" cy="100" r="80" stroke="#dc3545" stroke-width="1" opacity="0.3" />
-                <circle cx="900" cy="200" r="120" stroke="#dc3545" stroke-width="1" opacity="0.2" />
-                <circle cx="1000" cy="80" r="60" stroke="#dc3545" stroke-width="1" opacity="0.4" />
-            </svg>
-        </div>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-        <div class="performance-badge">Premium Quality</div>
+        // مكون تسجيل الدخول
+        function Login({ setToken, setCategory }) {
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [error, setError] = useState('');
+            const [loading, setLoading] = useState(false);
 
-        <div class="content-wrapper">
-            <div class="text-content">
-                <h1>Superior Engine Protection</h1>
-                <p>Advanced synthetic motor oils engineered for peak performance. Protect your engine with
-                    industry-leading formulations that extend life and maximize efficiency.</p>
-                <a href="#products" class="cta-button">Shop Now</a>
-            </div>
+            const handleLogin = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError('');
+                try {
+                    const response = await axios.post('/api/categories/login', {
+                        email,
+                        password,
+                    });
+                    setToken(response.data.token);
+                    setCategory(response.data.category);
+                } catch (err) {
+                    setError(err.response?.data?.message || 'فشل تسجيل الدخول');
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-            <div class="visual-element">
-                <div class="svg-container">
-                    <svg width="400" height="300" viewBox="0 0 400 300" fill="none">
-                        <!-- Main Oil Bottle -->
-                        <g class="oil-drop-animation">
-                            <!-- Bottle Body -->
-                            <rect x="160" y="80" width="80" height="140" rx="8" fill="url(#bottleGradient)"
-                                stroke="#dc3545" stroke-width="2" />
-
-                            <!-- Bottle Cap -->
-                            <rect x="170" y="60" width="60" height="30" rx="6" fill="#dc3545" />
-
-                            <!-- Oil Level -->
-                            <rect x="170" y="100" width="60" height="100" rx="4" fill="url(#oilGradient)"
-                                opacity="0.8" />
-
-                            <!-- Label -->
-                            <rect x="175" y="140" width="50" height="40" rx="4" fill="white" stroke="#dc3545"
-                                stroke-width="1" />
-                            <text x="200" y="155" text-anchor="middle" font-size="8" font-weight="bold"
-                                fill="#dc3545">PREMIUM</text>
-                            <text x="200" y="170" text-anchor="middle" font-size="10" font-weight="bold"
-                                fill="#dc3545">5W-30</text>
-                        </g>
-
-                        <!-- Floating Oil Drops -->
-                        <g class="oil-drop-animation" style="animation-delay: 0.5s;">
-                            <circle cx="120" cy="120" r="6" fill="url(#dropGradient)" />
-                            <circle cx="280" cy="160" r="4" fill="url(#dropGradient)" />
-                            <circle cx="320" cy="100" r="5" fill="url(#dropGradient)" />
-                        </g>
-
-                        <!-- Engine Gear -->
-                        <g class="gear-animation" transform="translate(80, 180)">
-                            <circle cx="0" cy="0" r="30" fill="none" stroke="#dc3545" stroke-width="3" opacity="0.6" />
-                            <circle cx="0" cy="0" r="20" fill="none" stroke="#dc3545" stroke-width="2" opacity="0.4" />
-                            <!-- Gear Teeth -->
-                            <g stroke="#dc3545" stroke-width="2" opacity="0.6">
-                                <line x1="0" y1="-35" x2="0" y2="-25" />
-                                <line x1="25" y1="-25" x2="35" y2="-25" />
-                                <line x1="25" y1="25" x2="35" y2="25" />
-                                <line x1="0" y1="35" x2="0" y2="25" />
-                                <line x1="-25" y1="25" x2="-35" y2="25" />
-                                <line x1="-25" y1="-25" x2="-35" y2="-25" />
-                            </g>
-                        </g>
-
-                        <!-- Engine Part -->
-                        <g class="engine-part" transform="translate(300, 200)">
-                            <rect x="-20" y="-15" width="40" height="30" rx="4" fill="none" stroke="#dc3545"
-                                stroke-width="2" opacity="0.5" />
-                            <circle cx="0" cy="0" r="8" fill="none" stroke="#dc3545" stroke-width="2" opacity="0.7" />
-                            <line x1="-15" y1="0" x2="15" y2="0" stroke="#dc3545" stroke-width="1" opacity="0.6" />
-                        </g>
-
-                        <!-- Decorative Elements -->
-                        <g opacity="0.3">
-                            <path d="M50 50 Q 100 30 150 50" stroke="#dc3545" stroke-width="2" fill="none" />
-                            <path d="M250 250 Q 300 230 350 250" stroke="#dc3545" stroke-width="2" fill="none" />
-                        </g>
-
-                        <!-- Performance Indicators -->
-                        <g transform="translate(60, 60)">
-                            <rect x="0" y="0" width="60" height="8" rx="4" fill="#f8f9fa" stroke="#dc3545"
-                                stroke-width="1" />
-                            <rect x="2" y="2" width="50" height="4" rx="2" fill="url(#performanceGradient)" />
-                            <text x="30" y="20" text-anchor="middle" font-size="8" fill="#dc3545">PERFORMANCE</text>
-                        </g>
-
-                        <!-- Gradients -->
-                        <defs>
-                            <linearGradient id="bottleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
-                                <stop offset="50%" style="stop-color:#f8f9fa;stop-opacity:0.7" />
-                                <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:0.9" />
-                            </linearGradient>
-
-                            <linearGradient id="oilGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#dc3545;stop-opacity:0.8" />
-                                <stop offset="50%" style="stop-color:#c82333;stop-opacity:0.6" />
-                                <stop offset="100%" style="stop-color:#721c24;stop-opacity:0.8" />
-                            </linearGradient>
-
-                            <radialGradient id="dropGradient">
-                                <stop offset="0%" style="stop-color:#dc3545;stop-opacity:0.8" />
-                                <stop offset="100%" style="stop-color:#c82333;stop-opacity:0.4" />
-                            </radialGradient>
-
-                            <linearGradient id="performanceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#dc3545;stop-opacity:0.3" />
-                                <stop offset="80%" style="stop-color:#dc3545;stop-opacity:0.8" />
-                                <stop offset="100%" style="stop-color:#c82333;stop-opacity:0.9" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
+            return (
+                <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                        <h2 className="text-2xl font-bold mb-6 text-center">تسجيل دخول الشركة</h2>
+                        {error && <p className="text-red-500 mb-4">{error}</p>}
+                        <form onSubmit={handleLogin}>
+                            <div className="mb-4">
+                                <label className="block text-gray-700 mb-2">الإيميل</label>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-6">
+                                <label className="block text-gray-700 mb-2">كلمة المرور</label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition disabled:bg-blue-300"
+                                disabled={loading}
+                            >
+                                {loading ? 'جاري التحميل...' : 'تسجيل الدخول'}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </div>
+            );
+        }
 
-        <div class="feature-highlights">
-            <div class="feature">Advanced Formula</div>
-            <div class="feature">Engine Protection</div>
-            <div class="feature">Long-Lasting</div>
-        </div>
-    </div>
+        // مكون لوحة التحكم
+        function Dashboard({ token, category, setToken, setCategory }) {
+            const [name, setName] = useState(category.name);
+            const [email, setEmail] = useState(category.email);
+            const [password, setPassword] = useState('');
+            const [image, setImage] = useState(null);
+            const [products, setProducts] = useState([]);
+            const [newProduct, setNewProduct] = useState({
+                title: '',
+                description: '',
+                price: '',
+                status: 'active',
+                stock: '',
+                images: [],
+            });
+            const [error, setError] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [productLoading, setProductLoading] = useState(false);
+
+            // جلب المنتجات عند تحميل المكون
+            useEffect(() => {
+                const fetchProducts = async () => {
+                    setProductLoading(true);
+                    try {
+                        const response = await axios.get(`/api/products?category_id=${category.id}`, {
+                            headers: { Authorization: `Bearer ${token}` },
+                        });
+                        setProducts(response.data.data);
+                    } catch (err) {
+                        setError(err.response?.data?.message || 'فشل في جلب المنتجات');
+                    } finally {
+                        setProductLoading(false);
+                    }
+                };
+                fetchProducts();
+            }, [category.id, token]);
+
+            // تحديث بيانات الشركة
+            const handleUpdateCategory = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError('');
+                const formData = new FormData();
+                if (name !== category.name) formData.append('name', name);
+                if (email !== category.email) formData.append('email', email);
+                if (password) formData.append('password', password);
+                if (image) formData.append('image', image);
+
+                try {
+                    const response = await axios.post(`/api/categories/${category.id}`, formData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+                    setCategory(response.data.category);
+                    setPassword('');
+                    setImage(null);
+                    alert('تم تحديث الشركة بنجاح');
+                } catch (err) {
+                    setError(err.response?.data?.message || 'فشل في تحديث الشركة');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            // إضافة منتج جديد
+            const handleAddProduct = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError('');
+                const formData = new FormData();
+                formData.append('category_id', category.id);
+                formData.append('title', newProduct.title);
+                formData.append('description', newProduct.description);
+                formData.append('price', newProduct.price);
+                formData.append('status', newProduct.status);
+                if (newProduct.stock) formData.append('stock', newProduct.stock);
+                newProduct.images.forEach((img, index) => formData.append(`images[${index}]`, img));
+
+                try {
+                    await axios.post('/api/products', formData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+                    setNewProduct({
+                        title: '',
+                        description: '',
+                        price: '',
+                        status: 'active',
+                        stock: '',
+                        images: [],
+                    });
+                    const response = await axios.get(`/api/products?category_id=${category.id}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    setProducts(response.data.data);
+                    alert('تم إضافة المنتج بنجاح');
+                } catch (err) {
+                    setError(err.response?.data?.message || 'فشل في إضافة المنتج');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            // حذف منتج
+            const handleDeleteProduct = async (productId) => {
+                if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+                setLoading(true);
+                setError('');
+                try {
+                    await axios.delete(`/api/products/${productId}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    setProducts(products.filter((p) => p.id !== productId));
+                    alert('تم حذف المنتج بنجاح');
+                } catch (err) {
+                    setError(err.response?.data?.message || 'فشل في حذف المنتج');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-100 p-6">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-3xl font-bold">لوحة تحكم الشركة: {category.name}</h2>
+                            <button
+                                onClick={() => setToken(null)}
+                                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                            >
+                                تسجيل الخروج
+                            </button>
+                        </div>
+
+                        {/* تعديل بيانات الشركة */}
+                        <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
+                            <h3 className="text-xl font-semibold mb-4">تعديل بيانات الشركة</h3>
+                            {error && <p className="text-red-500 mb-4">{error}</p>}
+                            <form onSubmit={handleUpdateCategory}>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 mb-2">اسم الشركة</label>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 mb-2">الإيميل</label>
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 mb-2">كلمة المرور (اتركها فارغة إذا لم ترغب في التغيير)</label>
+                                    <input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 mb-2">صورة الشركة</label>
+                                    {category.image && (
+                                        <img src={category.image} alt="Category" className="w-32 h-32 object-cover mb-2 rounded" />
+                                    )}
+                                    <input
+                                        type="file"
+                                        onChange={(e) => setImage(e.target.files[0])}
+                                        className="w-full p-2 border rounded"
+                                        accept="image/*"
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
+                                    disabled={loading}
+                                >
+                                    {loading ? 'جاري التحميل...' : 'تحديث الشركة'}
+                                </button>
+                            </form>
+                        </div>
+
+                        {/* إدارة المنتجات */}
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <h3 className="text-xl font-semibold mb-4">إدارة المنتجات</h3>
+                            {/* إضافة منتج جديد */}
+                            <form onSubmit={handleAddProduct} className="mb-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">عنوان المنتج</label>
+                                        <input
+                                            type="text"
+                                            value={newProduct.title}
+                                            onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">الوصف</label>
+                                        <textarea
+                                            value={newProduct.description}
+                                            onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">السعر</label>
+                                        <input
+                                            type="number"
+                                            value={newProduct.price}
+                                            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            required
+                                            min="1"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">الحالة</label>
+                                        <select
+                                            value={newProduct.status}
+                                            onChange={(e) => setNewProduct({ ...newProduct, status: e.target.value })}
+                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        >
+                                            <option value="active">متوفر</option>
+                                            <option value="inactive">غير متوفر</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">المخزون</label>
+                                        <input
+                                            type="number"
+                                            value={newProduct.stock}
+                                            onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            min="0"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">صور المنتج</label>
+                                        <input
+                                            type="file"
+                                            multiple
+                                            onChange={(e) => setNewProduct({ ...newProduct, images: Array.from(e.target.files) })}
+                                            className="w-full p-2 border rounded"
+                                            accept="image/*"
+                                        />
+                                    </div>
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:bg-green-300"
+                                    disabled={loading}
+                                >
+                                    {loading ? 'جاري التحميل...' : 'إضافة المنتج'}
+                                </button>
+                            </form>
+
+                            {/* قائمة المنتجات */}
+                            {productLoading ? (
+                                <p className="text-gray-500">جاري تحميل المنتجات...</p>
+                            ) : products.length === 0 ? (
+                                <p className="text-gray-500">لا توجد منتجات متاحة</p>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {products.map((product) => (
+                                        <div key={product.id} className="bg-gray-50 p-4 rounded-lg shadow">
+                                            <h4 className="text-lg font-semibold">{product.title}</h4>
+                                            <p className="text-gray-600">{product.description}</p>
+                                            <p className="text-gray-600">السعر: ${product.price}</p>
+                                            <p className="text-gray-600">الحالة: {product.status === 'active' ? 'متوفر' : 'غير متوفر'}</p>
+                                            <p className="text-gray-600">المخزون: {product.stock ?? 'غير محدد'}</p>
+                                            {product.images.length > 0 && (
+                                                <div className="flex gap-2 mt-2">
+                                                    {product.images.map((img) => (
+                                                        <img
+                                                            key={img.id}
+                                                            src={img.url}
+                                                            alt={product.title}
+                                                            className="w-16 h-16 object-cover rounded"
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            <button
+                                                onClick={() => handleDeleteProduct(product.id)}
+                                                className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                            >
+                                                حذف
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // المكون الرئيسي
+        function App() {
+            const [token, setToken] = useState(null);
+            const [category, setCategory] = useState(null);
+
+            return (
+                <div>
+                    {token && category ? (
+                        <Dashboard token={token} category={category} setToken={setToken} setCategory={setCategory} />
+                    ) : (
+                        <Login setToken={setToken} setCategory={setCategory} />
+                    )}
+                </div>
+            );
+        }
+
+        // عرض التطبيق
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
 </body>
-
 </html>

@@ -1,13 +1,24 @@
 import { useState, useEffect } from "react";
-import ProductGrid from "../components/ProductGrid";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import Footer from "../components/Footer";
+import ProductGrid from "../components/sections/ProductGrid";
+import Header from "../components/sections/Header";
+import About from "../components/sections/About";
+import Hero from "../components/sections/Hero";
+import Footer from "../components/sections/Footer";
+import Team from "../components/sections/Team";
 import "../assets/styles/index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { API_TITLE, settingsReady } from "../services/api";
 
 function Home() {
     const [loading, setLoading] = useState(true);
+    const [title, setTitle] = useState(""); // قيمة مبدئية فارغة
+
+    useEffect(() => {
+        // انتظار تحميل الإعدادات من API
+        settingsReady.then(() => {
+            setTitle(API_TITLE()); // تحديث العنوان بعد التحميل
+        });
+    }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -19,308 +30,109 @@ function Home() {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-screen bg-gradient-to-br from-white via-gray-50 to-white">
-                <svg
-                    width="100%"
-                    height="400"
-                    viewBox="0 0 400 400"
-                    fill="none"
-                    className="drop-shadow-2xl"
-                >
-                    {/* Animated Oil Bottle */}
-                    <g
-                        className="animate-bounce"
-                        style={{ animationDuration: "3s" }}
-                    >
-                        {/* Bottle Shadow */}
-                        <ellipse
-                            cx="200"
-                            cy="380"
-                            rx="40"
-                            ry="8"
-                            fill="rgba(0,0,0,0.2)"
-                        />
+            <div className="flex flex-col items-center justify-center h-screen">
 
-                        {/* Bottle Body */}
-                        <rect
-                            x="160"
-                            y="120"
-                            width="80"
-                            height="200"
-                            rx="12"
-                            fill="url(#bottleGradient)"
-                            stroke="rgba(255,255,255,0.3)"
-                            strokeWidth="2"
-                        />
+            <div className="relative mb-8">
+                <svg width="200" height="200" viewBox="0 0 200 200" className="animate-float">
 
-                        {/* Bottle Cap */}
-                        <rect
-                            x="170"
-                            y="90"
-                            width="60"
-                            height="40"
-                            rx="8"
-                            fill="url(#capGradient)"
-                        />
+                    <rect x="60" y="70" width="80" height="80" rx="5" fill="white" stroke="#4f46e5" strokeWidth="2" />
 
-                        {/* Cap Detail */}
-                        <rect
-                            x="175"
-                            y="95"
-                            width="50"
-                            height="8"
-                            rx="4"
-                            fill="rgba(255,255,255,0.3)"
-                        />
-
-                        {/* Oil Level */}
-                        <rect
-                            x="170"
-                            y="140"
-                            width="60"
-                            height="160"
-                            rx="8"
-                            fill="url(#oilGradient)"
-                        />
-
-                        {/* Premium Label */}
-                        <rect
-                            x="175"
-                            y="200"
-                            width="50"
-                            height="60"
-                            rx="6"
-                            fill="rgba(255,255,255,0.95)"
-                            stroke="rgba(220,53,69,0.5)"
-                            strokeWidth="1"
-                        />
-                        <text
-                            x="200"
-                            y="220"
-                            textAnchor="middle"
-                            fontSize="10"
-                            fontWeight="bold"
-                            fill="#dc3545"
-                        >
-                            PREMIUM
-                        </text>
-                        <text
-                            x="200"
-                            y="235"
-                            textAnchor="middle"
-                            fontSize="14"
-                            fontWeight="bold"
-                            fill="#dc3545"
-                        >
-                            5W-30
-                        </text>
-                        <text
-                            x="200"
-                            y="250"
-                            textAnchor="middle"
-                            fontSize="8"
-                            fill="#666"
-                        >
-                            SYNTHETIC
-                        </text>
+                    <g className="animate-pulse-opacity">
+                        <rect x="75" y="85" width="15" height="15" rx="2" fill="#818cf8" />
+                        <rect x="110" y="85" width="15" height="15" rx="2" fill="#818cf8" />
+                        <rect x="75" y="110" width="15" height="15" rx="2" fill="#818cf8" />
+                        <rect x="110" y="110" width="15" height="15" rx="2" fill="#818cf8" />
                     </g>
 
-                    {/* Floating Elements */}
-                    <g
-                        className="animate-pulse"
-                        style={{ animationDelay: "0.5s" }}
-                    >
-                        <circle
-                            cx="100"
-                            cy="150"
-                            r="8"
-                            fill="url(#dropGradient)"
-                            opacity="0.8"
-                        />
-                        <circle
-                            cx="320"
-                            cy="200"
-                            r="6"
-                            fill="url(#dropGradient)"
-                            opacity="0.6"
-                        />
-                        <circle
-                            cx="80"
-                            cy="280"
-                            r="4"
-                            fill="url(#dropGradient)"
-                            opacity="0.7"
-                        />
-                        <circle
-                            cx="340"
-                            cy="120"
-                            r="5"
-                            fill="url(#dropGradient)"
-                            opacity="0.5"
-                        />
+                    <rect x="85" y="130" width="30" height="20" rx="2" fill="#4f46e5" />
+
+                    <path d="M50 70 L150 70 L130 50 L70 50 Z" fill="#6366f1" />
+
+                    <circle cx="70" cy="55" r="3" fill="gold">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="130" cy="55" r="3" fill="gold">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="0.5s" />
+                    </circle>
+                </svg>
+
+                <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 200 200">
+
+                    <g className="animate-float" style={{ animationDelay: '0.5s' }}>
+                        <circle cx="30" cy="30" r="8" fill="#f472b6" opacity="0.7" />
+                        <rect x="26" y="38" width="4" height="8" rx="2" fill="#f472b6" opacity="0.7" />
                     </g>
 
-                    {/* Rotating Gear */}
-                    <g
-                        className="animate-spin"
-                        style={{
-                            transformOrigin: "100px 120px",
-                            animationDuration: "8s",
-                        }}
-                    >
-                        <circle
-                            cx="100"
-                            cy="120"
-                            r="30"
-                            fill="none"
-                            stroke="rgba(220,53,69,0.4)"
-                            strokeWidth="3"
-                        />
-                        <circle
-                            cx="100"
-                            cy="120"
-                            r="20"
-                            fill="rgba(220,53,69,0.05)"
-                            stroke="rgba(220,53,69,0.3)"
-                            strokeWidth="2"
-                        />
-                        {/* Gear Teeth */}
-                        {Array.from({ length: 8 }).map((_, i) => {
-                            const angle = (i * 45 * Math.PI) / 180;
-                            const x1 = 100 + Math.cos(angle) * 25;
-                            const y1 = 120 + Math.sin(angle) * 25;
-                            const x2 = 100 + Math.cos(angle) * 35;
-                            const y2 = 120 + Math.sin(angle) * 35;
-                            return (
-                                <line
-                                    key={i}
-                                    x1={x1}
-                                    y1={y1}
-                                    x2={x2}
-                                    y2={y2}
-                                    stroke="rgba(220,53,69,0.4)"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                />
-                            );
-                        })}
+                    <g className="animate-float" style={{ animationDelay: '1s' }}>
+                        <circle cx="180" cy="50" r="6" fill="#38bdf8" opacity="0.7" />
+                        <rect x="177" y="56" width="3" height="6" rx="1.5" fill="#38bdf8" opacity="0.7" />
                     </g>
 
-                    {/* Service Icons */}
-                    <g
-                        className="animate-pulse"
-                        style={{ animationDelay: "1s" }}
-                    >
-                        {/* Wrench */}
-                        <g transform="translate(320, 300)">
-                            <rect
-                                x="0"
-                                y="8"
-                                width="25"
-                                height="4"
-                                rx="2"
-                                fill="rgba(220,53,69,0.5)"
-                            />
-                            <circle
-                                cx="0"
-                                cy="10"
-                                r="6"
-                                fill="none"
-                                stroke="rgba(220,53,69,0.5)"
-                                strokeWidth="2"
-                            />
-                        </g>
-
-                        {/* Shield */}
-                        <g transform="translate(60, 320)">
-                            <path
-                                d="M0,0 L10,0 L15,10 L10,20 L0,20 L-5,10 Z"
-                                fill="rgba(220,53,69,0.2)"
-                                stroke="rgba(220,53,69,0.5)"
-                                strokeWidth="2"
-                            />
-                            <text
-                                x="5"
-                                y="12"
-                                textAnchor="middle"
-                                fontSize="12"
-                                fill="rgba(220,53,69,0.7)"
-                            >
-                                ✓
-                            </text>
-                        </g>
+                    <g className="animate-float" style={{ animationDelay: '1.5s' }}>
+                        <circle cx="170" cy="170" r="5" fill="#34d399" opacity="0.7" />
+                        <rect x="167.5" y="175" width="2.5" height="5" rx="1.25" fill="#34d399" opacity="0.7" />
                     </g>
-
-                    {/* Gradients */}
-                    <defs>
-                        <linearGradient
-                            id="bottleGradient"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                        >
-                            <stop
-                                offset="0%"
-                                stopColor="rgba(255,255,255,0.15)"
-                            />
-                            <stop
-                                offset="50%"
-                                stopColor="rgba(255,255,255,0.05)"
-                            />
-                            <stop
-                                offset="100%"
-                                stopColor="rgba(255,255,255,0.1)"
-                            />
-                        </linearGradient>
-
-                        <linearGradient
-                            id="capGradient"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                        >
-                            <stop offset="0%" stopColor="#dc3545" />
-                            <stop offset="100%" stopColor="#c82333" />
-                        </linearGradient>
-
-                        <linearGradient
-                            id="oilGradient"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                        >
-                            <stop offset="0%" stopColor="rgba(220,53,69,0.7)" />
-                            <stop
-                                offset="50%"
-                                stopColor="rgba(200,35,51,0.5)"
-                            />
-                            <stop
-                                offset="100%"
-                                stopColor="rgba(220,53,69,0.8)"
-                            />
-                        </linearGradient>
-
-                        <radialGradient id="dropGradient">
-                            <stop offset="0%" stopColor="rgba(220,53,69,0.8)" />
-                            <stop
-                                offset="100%"
-                                stopColor="rgba(200,35,51,0.4)"
-                            />
-                        </radialGradient>
-                    </defs>
                 </svg>
             </div>
-        );
+
+            <div className="text-center">
+                <h2 className="text-2xl font-bold text-indigo-800 mb-2">مرحباً بكم في {title} </h2>
+                <p className="text-gray-600 mb-6">جاري تحميل أفضل العروض والتجارب </p>
+
+                <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mx-auto">
+                    <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full origin-left animate-pulse"></div>
+                </div>
+
+                <p className="text-sm text-gray-500 mt-4 animate-pulse-opacity">
+                    جاري تحميل المحتوى المميز...
+                </p>
+            </div>
+
+            <div className="absolute bottom-6 flex space-x-6 space-x-reverse opacity-70">
+                <div className="w-10 h-10 bg-indigo-500 rounded-lg"></div>
+                <div className="w-10 h-10 bg-pink-500 rounded-lg"></div>
+                <div className="w-10 h-10 bg-blue-500 rounded-lg"></div>
+                <div className="w-10 h-10 bg-green-500 rounded-lg"></div>
+            </div>
+
+            <style>{`
+                @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+
+                body {
+                    font-family: 'Tajawal', sans-serif;
+                }
+
+                @keyframes float {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-10px); }
+                }
+
+                @keyframes pulse-opacity {
+                    0%, 100% { opacity: 0.7; }
+                    50% { opacity: 1; }
+                }
+
+                .animate-float {
+                    animation: float 3s ease-in-out infinite;
+                }
+
+                .animate-pulse-opacity {
+                    animation: pulse-opacity 2s ease-in-out infinite;
+                }
+            `}</style>
+
+        </div>
+
+        )
     }
 
     return (
         <main>
             <Header />
             <Hero />
+            <About />
             <ProductGrid />
+            <Team />
             <Footer />
         </main>
     );

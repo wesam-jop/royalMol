@@ -3,15 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class CategoryResource extends Resource
 {
@@ -28,9 +26,29 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('اسم الفئة')
+                    ->label('اسم الشركة')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->label('الإيميل')
+                    ->email()
+                    ->unique(table: Category::class, column: 'email', ignorable: fn ($record) => $record)
+                    ->required(),
+                Forms\Components\TextInput::make('password')
+                    ->label('كلمة المرور')
+                    ->password()
+                    ->minLength(8)
+                    ->required(fn ($operation) => $operation === 'create')
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null),
+                Forms\Components\FileUpload::make('image')
+                    ->label('صورة الشركة')
+                    ->directory('categories')
+                    ->disk('public')
+                    ->image()
+                    ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
+                    ->nullable(),
             ]);
     }
 
@@ -39,8 +57,17 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('اسم الفئة')
+                    ->label('اسم الشركة')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('الإيميل')
+                    ->searchable(),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('صورة الشركة')
+                    ->getStateUsing(fn ($record) => $record->image ? asset('storage/' . $record->image) : null)
+                    ->circular()
+                    ->defaultImageUrl(url('/images/placeholder.png'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('تاريخ الإنشاء')
                     ->dateTime()
@@ -56,13 +83,18 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('عرض')
+                    ->icon('heroicon-o-eye'),
+                Tables\Actions\EditAction::make()
+                    ->label('تعديل')
+                    ->icon('heroicon-o-pencil'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->label('حذف'),
+                        ->label('حذف')
+                        ->icon('heroicon-o-trash'),
                 ])
                 ->label('إجراءات جماعية')
                 ->icon('heroicon-o-ellipsis-horizontal'),
