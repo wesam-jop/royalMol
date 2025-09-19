@@ -114,7 +114,7 @@ export default function Team() {
             <div className="container mx-auto px-6 py-1">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-full mb-4">
+                    <span className="inline-block px-4 py-2 bg-gradient-to-r from-[#fe8668] to-[#e55b44] text-white text-sm font-semibold rounded-full mb-4">
                         تعرف على فريقنا
                     </span>
                     <h2 className="text-4xl md:text-5xl py-5 font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-4">
@@ -153,7 +153,7 @@ export default function Team() {
                         <SwiperSlide key={idx}>
                             <div className="group my-10 relative">
                                 {/* Card */}
-                                <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                                <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 transform hover:-translate-y-2">
                                     {/* Image Container */}
                                     <div className="relative overflow-hidden">
                                         <img

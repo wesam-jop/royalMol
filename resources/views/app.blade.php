@@ -3,7 +3,7 @@
 
 <head>
     <title id="page-title">{{ $settings['API_TITLE'] ?? 'الموقع' }}</title>
-    <link rel="icon" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" href="{{ asset('logo.png') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">

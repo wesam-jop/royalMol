@@ -13,6 +13,10 @@ Route::get('/pageProduct', function () {
     return Inertia::render('ProductAll');
 });
 
+Route::get('/pagecategory', function () {
+    return Inertia::render('PageCategory');
+});
+
 // Category authentication routes
 Route::prefix('categories')->group(function () {
     // صفحة تسجيل الدخول
@@ -30,6 +34,13 @@ Route::prefix('categories')->group(function () {
     // تسجيل الخروج
     Route::post('/logout', [CategoryController::class, 'logout'])
         ->name('category.logout');
+    
+    // صفحة تعرض منتجات فئة محددة
+    Route::get('/{category}/products', function ($category) {
+        return Inertia::render('CategoryProducts', [
+            'categoryId' => (int) $category,
+        ]);
+    })->name('categories.products');
 });
 
 // يمكنك إضافة روتس إضافية حسب الحاجة

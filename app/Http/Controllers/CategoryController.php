@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product; // لا تنسى استدعاء الموديل في أعلى الكنترولر
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,28 @@ use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    /**
+     * Public: list categories for API
+     */
+    public function index()
+    {
+        $categories = Category::query()
+            ->orderBy('id', 'desc')
+            ->get()
+            ->map(function ($c) {
+                return [
+                    'id' => $c->id,
+                    'name' => $c->name,
+                    'email' => $c->email,
+                    'image' => $c->image ? asset('storage/' . $c->image) : null,
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'data' => $categories,
+        ]);
+    }
     /**
      * Show the category login page
      */
@@ -212,4 +235,32 @@ class CategoryController extends Controller
             ]
         ]);
     }
+    public function show($id)
+{
+    // نتأكد أن الفئة موجودة
+    $category = Category::findOrFail($id);
+
+    // جلب المنتجات التابعة لها
+    $products = Product::where('category_id', $id)
+        ->orderBy('id', 'desc')
+        ->get()
+        ->map(function ($p) {
+            return [
+                'id' => $p->id,
+                'name' => $p->name,
+                'price' => $p->price,
+                'description' => $p->description,
+                'image' => $p->image ? asset('storage/' . $p->image) : null,
+            ];
+        });
+
+    return response()->json([
+        'success' => true,
+        'category' => [
+            'id' => $category->id,
+            'name' => $category->name,
+        ],
+        'products' => $products,
+    ]);
+}
 }
